@@ -1,0 +1,4 @@
+name: RolesV5
+version: '${version}'
+main: be.artex.rolesv5.plugin.Main
+api-version: '1.19'
