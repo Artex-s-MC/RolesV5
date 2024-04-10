@@ -15,9 +15,11 @@ import java.util.UUID;
 
 public final class Roles {
     public static HashMap<UUID, String> playerRole = new HashMap<>();
-    public static HashMap<String, ArrayList<String>> RolesInCamp = new HashMap<>();
+    public static HashMap<String, ArrayList<Role>> RolesInCamp = new HashMap<>();
     public static HashMap<String, Role> registeredRoles = new HashMap<>();
     public static HashMap<String, Camp> registeredCamps = new HashMap<>();
+    public static ArrayList<Camp> camps = new ArrayList<>();
+    public static ArrayList<Role> roles = new ArrayList<>();
 
     public static boolean playerHasRole(Player player) {
         if (playerRole.get(player.getUniqueId()) == null)
@@ -28,10 +30,12 @@ public final class Roles {
 
     public static void registerRole(Role role) {
         registeredRoles.putIfAbsent(role.getId(), role);
+        roles.add(role);
     }
 
     public static void registerCamp(Camp camp) {
         registeredCamps.putIfAbsent(camp.getId(), camp);
+        camps.add(camp);
     }
 
     public static Role getRole(String roleId) {
@@ -40,6 +44,20 @@ public final class Roles {
 
     public static Camp getCamp(String campId) {
         return registeredCamps.get(campId);
+    }
+
+    public static Role getPlayerRole(Player player) {
+        return getRole(playerRole.get(player.getUniqueId()));
+    }
+
+    public static void setPlayerRole(Player player, Role role) {
+        if (role == null) {
+            playerRole.remove(player.getUniqueId());
+            return;
+        }
+
+
+        playerRole.put(player.getUniqueId(), role.getId());
     }
 
     public static void givePlayerGear(PlayerInventory playerInventory) {

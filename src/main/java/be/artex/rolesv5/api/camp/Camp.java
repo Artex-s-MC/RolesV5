@@ -10,34 +10,32 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 public enum Camp {
-
-
     SLAYER(ItemBuilder.create(Material.IRON_SWORD)
             .displayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Slayers")
             .addEnchant(Enchantment.ARROW_DAMAGE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .build(),
-            Bukkit.createInventory(null, 9, "Slayers"),
-            "slayer"),
+            Bukkit.createInventory(null, 54, "Slayers"),
+            "slayer", 20),
     DEMON(ItemBuilder.create(Material.REDSTONE)
             .displayName(ChatColor.RED + "" + ChatColor.BOLD + "Démons")
             .addEnchant(Enchantment.ARROW_DAMAGE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .build(),
-            Bukkit.createInventory(null, 9, "Démons"),
-            "demon");
-
-
+            Bukkit.createInventory(null, 54, "Démons"),
+            "demon", 21);
 
 
     private final ItemStack stack;
     private final Inventory inventory;
     private final String id;
+    private final int placement;
 
-    Camp(ItemStack stack, Inventory inventory, String id) {
+    Camp(ItemStack stack, Inventory inventory, String id, int placement) {
         this.stack = stack;
         this.inventory = inventory;
         this.id = id;
+        this.placement = placement;
     }
 
     public ItemStack getStack() {
@@ -50,6 +48,10 @@ public enum Camp {
 
     public String getId() {
         return id;
+    }
+
+    public int getPlacement() {
+        return placement;
     }
 
     public static final ItemStack SLAYER_STACK = ItemBuilder.create(Material.IRON_SWORD)
