@@ -20,7 +20,7 @@ public class Inosuke extends Role {
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .displayName(ChatColor.GREEN + "Inosuke")
-            .setLore(ChatColor.RESET + "Inosuke possède un" + ChatColor.AQUA + "item (dash)" + ChatColor.RESET,  "cooldown de 45 secondes, et " + ChatColor.GRAY + "résistance" + ChatColor.RESET + "de façon permanente.", "")
+            .setLore(ChatColor.RESET + "Inosuke possède un " + ChatColor.AQUA + "item (dash) " + ChatColor.RESET + "cooldown de 45 secondes.", ChatColor.RESET + "" + ChatColor.GRAY + "Résistance " + ChatColor.RESET + "de façon permanente.")
             .build();
 
 
@@ -65,7 +65,7 @@ public class Inosuke extends Role {
     }
 
     @Override
-    public ChatColor getPlacement() {
+    public int getPlacement() {
         return 20;
     }
 }

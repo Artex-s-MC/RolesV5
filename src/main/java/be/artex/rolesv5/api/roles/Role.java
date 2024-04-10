@@ -4,9 +4,13 @@ import be.artex.rolesv5.api.camp.Camp;
 import com.avaje.ebean.validation.NotNull;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Rabbit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+
+import java.util.Random;
 
 public abstract class Role {
     public void assign(Player player) {
@@ -21,8 +25,16 @@ public abstract class Role {
         player.setMaxHealth(getMaxHealth());
         player.setGameMode(GameMode.SURVIVAL);
 
-        // gear
-        Roles.givePlayerGear(player.getInventory());
+        // items
+        player.getInventory().clear();
+        Roles.givePlayerGear(player.getInventory(), null);
+
+        // tp
+        int x = new Random().nextInt(40);
+        int z = new Random().nextInt(40);
+
+        player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
+
     }
 
 

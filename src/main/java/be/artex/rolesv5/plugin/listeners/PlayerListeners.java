@@ -3,9 +3,7 @@ package be.artex.rolesv5.plugin.listeners;
 import be.artex.rolesv5.api.camp.Camp;
 import be.artex.rolesv5.api.roles.Role;
 import be.artex.rolesv5.api.roles.Roles;
-import be.artex.rolesv5.api.roles.roles.Inosuke;
-import be.raft.crafty.Color;
-import be.raft.crafty.item.DyeBuilder;
+import be.artex.rolesv5.plugin.Main;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -24,8 +22,11 @@ import org.bukkit.potion.PotionEffectType;
 public class PlayerListeners implements Listener {
 
     private static ItemStack border;
+    private static Main main;
 
     public PlayerListeners() {
+        main = Main.getInstance();
+
         border = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 3);
         ItemMeta itemMeta = border.getItemMeta();
         itemMeta.setDisplayName(" ");
@@ -178,24 +179,53 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
+        if (e.getCurrentItem() == null)
+            return;
+
         if (e.getCurrentItem().equals(border)) {
             e.setCancelled(true);
             return;
         }
 
-        Camp foundCamp = null;
+        Camp foundCamp = Roles.camps.stream()
+                .filter(camp -> e.getCurrentItem().equals(camp.getStack()))
+                .findFirst().orElse(null);
 
+        Role foundRole = Roles.roles.stream()
+                .filter(role -> e.getCurrentItem().equals(role.getGUIStack()))
+                .findFirst().orElse(null);
 
-        for (Camp camp : Roles.camps) {
-            if (e.getCurrentItem().equals(camp.getStack())) {
-                foundCamp = camp;
-                break;
-            }
+        if (foundRole != null) {
+            e.setCancelled(true);
+
+            foundRole.assign((Player) e.getWhoClicked());
+            return;
         }
 
+
         if (foundCamp != null) {
-            for (Role role : Roles.RolesInCamp.get(foundCamp.getId()))
-            return;
+            e.setCancelled(true);
+
+            foundCamp.getInventory().setItem(0, border);
+            foundCamp.getInventory().setItem(1, border);
+            foundCamp.getInventory().setItem(7, border);
+            foundCamp.getInventory().setItem(8, border);
+            foundCamp.getInventory().setItem(9, border);
+            foundCamp.getInventory().setItem(17, border);
+            foundCamp.getInventory().setItem(44, border);
+            foundCamp.getInventory().setItem(36, border);
+            foundCamp.getInventory().setItem(45, border);
+            foundCamp.getInventory().setItem(46, border);
+            foundCamp.getInventory().setItem(52, border);
+            foundCamp.getInventory().setItem(53, border);
+
+            for (Role role : Roles.rolesInCamp.get(foundCamp.getId())) {
+                foundCamp.getInventory().setItem(role.getPlacement(), role.getGUIStack());
+            }
+
+            Bukkit.getScheduler().runTask(main, () -> {
+               e.getWhoClicked().openInventory(foundCamp.getInventory());
+            });
         }
 
     }

@@ -12,8 +12,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
+    private static Main instance;
+
     @Override
     public void onEnable() {
+
+        instance = this;
+
         // Plugin startup logic
         Roles.registerCamp(Camp.SLAYER);
         Roles.registerCamp(Camp.DEMON);
@@ -52,5 +57,9 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 }

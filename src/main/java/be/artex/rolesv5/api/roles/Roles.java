@@ -2,6 +2,7 @@ package be.artex.rolesv5.api.roles;
 
 import be.artex.rolesv5.api.camp.Camp;
 import be.raft.crafty.item.ItemBuilder;
+import com.avaje.ebean.validation.NotNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -15,26 +16,28 @@ import java.util.UUID;
 
 public final class Roles {
     public static HashMap<UUID, String> playerRole = new HashMap<>();
-    public static HashMap<String, ArrayList<Role>> RolesInCamp = new HashMap<>();
+    public static HashMap<String, ArrayList<Role>> rolesInCamp = new HashMap<>();
     public static HashMap<String, Role> registeredRoles = new HashMap<>();
     public static HashMap<String, Camp> registeredCamps = new HashMap<>();
     public static ArrayList<Camp> camps = new ArrayList<>();
     public static ArrayList<Role> roles = new ArrayList<>();
 
     public static boolean playerHasRole(Player player) {
-        if (playerRole.get(player.getUniqueId()) == null)
-            return false;
-
-        return true;
+        return playerRole.get(player.getUniqueId()) != null;
     }
 
     public static void registerRole(Role role) {
+        ArrayList<Role> old = rolesInCamp.get(role.getCamp().getId());
+        old.add(role);
+
         registeredRoles.putIfAbsent(role.getId(), role);
+        rolesInCamp.put(role.getCamp().getId(), old);
         roles.add(role);
     }
 
     public static void registerCamp(Camp camp) {
         registeredCamps.putIfAbsent(camp.getId(), camp);
+        rolesInCamp.putIfAbsent(camp.getId(), new ArrayList<>());
         camps.add(camp);
     }
 
@@ -60,11 +63,15 @@ public final class Roles {
         playerRole.put(player.getUniqueId(), role.getId());
     }
 
-    public static void givePlayerGear(PlayerInventory playerInventory) {
-        if (new Random().nextBoolean()) {
-            playerInventory.addItem(ItemBuilder.create(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).build());
+    public static void givePlayerGear(PlayerInventory playerInventory, ItemStack sword) {
+        if (sword == null) {
+            if (new Random().nextBoolean()) {
+                playerInventory.addItem(ItemBuilder.create(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).build());
+            } else {
+                playerInventory.addItem(ItemBuilder.create(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).build());
+            }
         } else {
-            playerInventory.addItem(ItemBuilder.create(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).build());
+            playerInventory.addItem(sword);
         }
 
         if (new Random().nextBoolean()) {
