@@ -23,7 +23,28 @@ public enum Camp {
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .build(),
             Bukkit.createInventory(null, 54, "Démons"),
-            "demon", 21);
+            "demon", 29),
+    VILLAGE(ItemBuilder.create(Material.HAY_BLOCK)
+            .displayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Village")
+            .addEnchant(Enchantment.ARROW_DAMAGE, 1)
+            .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+            .build(),
+            Bukkit.createInventory(null, 54, "Villageois"),
+                    "village", 24),
+    LOUP(ItemBuilder.create(Material.COOKED_BEEF)
+            .displayName(ChatColor.RED + "" + ChatColor.BOLD + "Loups-garous")
+            .addEnchant(Enchantment.ARROW_DAMAGE, 1)
+            .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+            .build(),
+            Bukkit.createInventory(null, 54, "Loups-garous"),
+                    "lg", 33),
+    SOLO(ItemBuilder.create(Material.BLAZE_POWDER)
+            .displayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Solitaires")
+            .addEnchant(Enchantment.ARROW_DAMAGE, 1)
+            .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+            .build(),
+            Bukkit.createInventory(null, 54, "Solitaires"),
+            "solo", 22);
 
 
     private final ItemStack stack;

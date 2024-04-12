@@ -63,15 +63,11 @@ public final class Roles {
         playerRole.put(player.getUniqueId(), role.getId());
     }
 
-    public static void givePlayerGear(PlayerInventory playerInventory, ItemStack sword) {
-        if (sword == null) {
-            if (new Random().nextBoolean()) {
-                playerInventory.addItem(ItemBuilder.create(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).build());
-            } else {
-                playerInventory.addItem(ItemBuilder.create(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).build());
-            }
+    public static void givePlayerGear(PlayerInventory playerInventory, int sharpLvl) {
+        if (new Random().nextBoolean()) {
+            playerInventory.addItem(ItemBuilder.create(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, sharpLvl).build());
         } else {
-            playerInventory.addItem(sword);
+            playerInventory.addItem(ItemBuilder.create(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, sharpLvl).build());
         }
 
         if (new Random().nextBoolean()) {

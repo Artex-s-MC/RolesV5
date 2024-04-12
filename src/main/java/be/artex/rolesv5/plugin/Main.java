@@ -2,7 +2,11 @@ package be.artex.rolesv5.plugin;
 
 import be.artex.rolesv5.api.camp.Camp;
 import be.artex.rolesv5.api.roles.Roles;
-import be.artex.rolesv5.api.roles.roles.Inosuke;
+import be.artex.rolesv5.api.roles.roles.slayer.Inosuke;
+import be.artex.rolesv5.api.roles.roles.solo.Assasin;
+import be.artex.rolesv5.api.roles.roles.solo.LGS;
+import be.artex.rolesv5.api.roles.roles.lg.VPL;
+import be.artex.rolesv5.api.roles.roles.solo.Yoriichi;
 import be.artex.rolesv5.plugin.listeners.PlayerListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,14 +20,20 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         instance = this;
 
         // Plugin startup logic
         Roles.registerCamp(Camp.SLAYER);
         Roles.registerCamp(Camp.DEMON);
+        Roles.registerCamp(Camp.VILLAGE);
+        Roles.registerCamp(Camp.LOUP);
+        Roles.registerCamp(Camp.SOLO);
 
         Roles.registerRole(new Inosuke());
+        Roles.registerRole(new VPL());
+        Roles.registerRole(new LGS());
+        Roles.registerRole(new Assasin());
+        Roles.registerRole(new Yoriichi());
 
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 

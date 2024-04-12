@@ -70,9 +70,9 @@ public class PlayerListeners implements Listener {
                 case IRON_BOOTS:
                 case WATER_BUCKET:
                 case LAVA_BUCKET:
+                case DIAMOND_SWORD:
                 case COBBLESTONE:
                     continue;
-
                 default:
                     stack.setType(Material.AIR);
             }
@@ -83,13 +83,18 @@ public class PlayerListeners implements Listener {
             return;
         }
 
-        Roles.setPlayerRole(e.getEntity(), null);
+        Role killerRole = Roles.getPlayerRole(e.getEntity().getKiller());
 
-        if (e.getEntity().getKiller() == null) {
-            e.setDeathMessage("§o§m------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " est mort, son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m------------");
+        if (e.getEntity().getKiller() != null && killerRole != null) {
+            e.setDeathMessage("§o§m-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " à été assasiné par " + ChatColor.RED + e.getEntity().getKiller().getDisplayName() + ChatColor.RESET + ", son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
+            killerRole.getOnKill(e);
         } else {
-            e.setDeathMessage("§o§m------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " à été assasiné par " + ChatColor.RED + e.getEntity().getKiller().getDisplayName() + ChatColor.RESET + ", son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m------------");
+            e.setDeathMessage("§o§m-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " est mort, son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
         }
+
+
+
+        Roles.setPlayerRole(e.getEntity(), null);
     }
 
     @EventHandler
@@ -114,7 +119,10 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void entityDamageEntity(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player) && !(e.getEntity() instanceof Player))
+        if (!(e.getDamager() instanceof Player))
+            return;
+
+        if (!(e.getEntity() instanceof  Player))
             return;
 
         double damage = e.getDamage();
@@ -127,7 +135,7 @@ public class PlayerListeners implements Listener {
         }
 
         if (entity.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
-            damage = (damage * 100) / 60;
+            damage = (damage / 100) * 60;
 
         if (entity.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
             damage = (damage / 100) * 60;
@@ -172,7 +180,6 @@ public class PlayerListeners implements Listener {
         if (e.getItem() == null)
             return;
 
-
         if (e.getItem().equals(ItemBuilder.create(Material.ENCHANTED_BOOK).displayName(ChatColor.RESET + "Quel est ton rôle ?").build()))
             e.getPlayer().openInventory(prepareCampsInv());
     }
@@ -201,7 +208,6 @@ public class PlayerListeners implements Listener {
             foundRole.assign((Player) e.getWhoClicked());
             return;
         }
-
 
         if (foundCamp != null) {
             e.setCancelled(true);

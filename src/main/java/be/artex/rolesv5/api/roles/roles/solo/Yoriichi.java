@@ -1,4 +1,4 @@
-package be.artex.rolesv5.api.roles.roles;
+package be.artex.rolesv5.api.roles.roles.solo;
 
 import be.artex.rolesv5.api.camp.Camp;
 import be.artex.rolesv5.api.roles.Role;
@@ -6,32 +6,34 @@ import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Inosuke extends Role {
+public class Yoriichi extends Role {
     private static final PotionEffect[] EFFECTS = {
-            new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0)
+            new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0),
+            new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0),
+            new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0)
     };
 
-    private static final ItemStack GUI_STACK = ItemBuilder.create(Material.PORK)
+    private static final ItemStack GUI_STACK = ItemBuilder.create(Material.IRON_SWORD)
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-            .displayName(ChatColor.GREEN + "Inosuke")
-            .setLore(ChatColor.RESET + "Inosuke possède un " + ChatColor.AQUA + "item (dash) " + ChatColor.RESET + "cooldown de 45 secondes.", ChatColor.RESET + "" + ChatColor.GRAY + "Résistance " + ChatColor.RESET + "de façon permanente.")
+            .displayName(ChatColor.GOLD + "Yoriichi")
+            .setLore(ChatColor.RESET + "" + ChatColor.AQUA + "Vitesse " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.GRAY + "Résistance " + ChatColor.RESET + "de façon permanente.")
             .build();
-
 
     @Override
     public String getName() {
-        return "Inosuke";
+        return "Yoriichi";
     }
 
     @Override
     public String getId() {
-        return "slayer_inosuke";
+        return "yoriichi";
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Inosuke extends Role {
 
     @Override
     public Camp getCamp() {
-        return Camp.SLAYER;
+        return Camp.SOLO;
     }
 
     @Override
@@ -55,17 +57,22 @@ public class Inosuke extends Role {
     }
 
     @Override
-    public void getOnKill() {
+    public void getOnKill(PlayerDeathEvent e) {
 
     }
 
     @Override
     public ChatColor getColor() {
-        return ChatColor.GREEN;
+        return ChatColor.GOLD;
     }
 
     @Override
     public int getPlacement() {
-        return 20;
+        return 22;
+    }
+
+    @Override
+    public int getSwordSharpLvl() {
+        return 3;
     }
 }
