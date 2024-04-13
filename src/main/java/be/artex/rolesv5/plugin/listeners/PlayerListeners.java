@@ -92,9 +92,8 @@ public class PlayerListeners implements Listener {
             e.setDeathMessage("§o§m-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " est mort, son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
         }
 
-
-
         Roles.setPlayerRole(e.getEntity(), null);
+
     }
 
     @EventHandler
@@ -141,6 +140,11 @@ public class PlayerListeners implements Listener {
             damage = (damage / 100) * 60;
 
         e.setDamage(damage);
+
+        if (Roles.getPlayerRole(damager) == null)
+            return;
+
+        Roles.getPlayerRole(damager).onHit(e);
     }
 
     @EventHandler

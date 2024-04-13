@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -64,6 +65,8 @@ public abstract class Role {
 
     @NotNull
     public abstract int getSwordSharpLvl();
+
+    public abstract void onHit(EntityDamageByEntityEvent e);
 
 
 }

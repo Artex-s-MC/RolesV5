@@ -2,7 +2,7 @@ package be.artex.rolesv5.plugin;
 
 import be.artex.rolesv5.api.camp.Camp;
 import be.artex.rolesv5.api.roles.Roles;
-import be.artex.rolesv5.api.roles.roles.slayer.Inosuke;
+import be.artex.rolesv5.api.roles.roles.slayer.Kanae;
 import be.artex.rolesv5.api.roles.roles.solo.Assasin;
 import be.artex.rolesv5.api.roles.roles.solo.LGS;
 import be.artex.rolesv5.api.roles.roles.lg.VPL;
@@ -29,11 +29,11 @@ public final class Main extends JavaPlugin {
         Roles.registerCamp(Camp.LOUP);
         Roles.registerCamp(Camp.SOLO);
 
-        Roles.registerRole(new Inosuke());
         Roles.registerRole(new VPL());
         Roles.registerRole(new LGS());
         Roles.registerRole(new Assasin());
         Roles.registerRole(new Yoriichi());
+        Roles.registerRole(new Kanae());
 
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 

@@ -6,6 +6,7 @@ import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -73,5 +74,10 @@ public class VPL extends Role {
     @Override
     public int getSwordSharpLvl() {
         return 3;
+    }
+
+    @Override
+    public void onHit(EntityDamageByEntityEvent e) {
+        
     }
 }
