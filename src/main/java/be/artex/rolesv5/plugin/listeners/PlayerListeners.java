@@ -18,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.*;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -95,7 +94,7 @@ public class PlayerListeners implements Listener {
             ScoreboardMngr.addAKill(e.getEntity().getKiller());
             ScoreboardMngr.updateScoreBoard(e.getEntity().getKiller());
 
-            ScoreboardMngr.resetKillstreak(e.getEntity());
+            ScoreboardMngr.resetKillStreak(e.getEntity());
             ScoreboardMngr.updateScoreBoard(e.getEntity());
 
             e.setDeathMessage("-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " à été assasiné par " + ChatColor.RED + e.getEntity().getKiller().getDisplayName() + ChatColor.RESET + ", son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
@@ -164,8 +163,12 @@ public class PlayerListeners implements Listener {
         ItemStack air = new ItemStack(Material.AIR);
         ItemStack[] armor = {air, air, air, air};
 
-        ScoreboardMngr.resetKillstreak(e.getPlayer());
-        ScoreboardMngr.updateScoreBoard(e.getPlayer());
+        ScoreboardMngr.resetKillStreak(e.getPlayer());
+        ScoreboardMngr.addOnlinePlayer();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ScoreboardMngr.updateScoreBoard(player);
+        }
 
         e.getPlayer().getInventory().setContents(armor);
 
@@ -192,6 +195,12 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         e.setQuitMessage(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "-" + ChatColor.DARK_GRAY + "] " + e.getPlayer().getDisplayName());
+
+        ScoreboardMngr.addOfflinePlayer();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ScoreboardMngr.updateScoreBoard(player);
+        }
     }
 
     @EventHandler
