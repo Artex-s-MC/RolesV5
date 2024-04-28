@@ -18,10 +18,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.*;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class PlayerListeners implements Listener {
 
     private static ItemStack border;
+    private static final HashMap<UUID, Integer> playersKillstreak = new HashMap<>();
+    private static final HashMap<UUID, Integer> playersKills = new HashMap<>();
     private static Main main;
 
     public PlayerListeners() {
@@ -86,7 +92,13 @@ public class PlayerListeners implements Listener {
         Role killerRole = Roles.getPlayerRole(e.getEntity().getKiller());
 
         if (e.getEntity().getKiller() != null && killerRole != null) {
-            e.setDeathMessage("§o§m-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " à été assasiné par " + ChatColor.RED + e.getEntity().getKiller().getDisplayName() + ChatColor.RESET + ", son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
+            ScoreboardMngr.addAKill(e.getEntity().getKiller());
+            ScoreboardMngr.updateScoreBoard(e.getEntity().getKiller());
+
+            ScoreboardMngr.resetKillstreak(e.getEntity());
+            ScoreboardMngr.updateScoreBoard(e.getEntity());
+
+            e.setDeathMessage("-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " à été assasiné par " + ChatColor.RED + e.getEntity().getKiller().getDisplayName() + ChatColor.RESET + ", son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
             killerRole.getOnKill(e);
         } else {
             e.setDeathMessage("§o§m-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " est mort, son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
@@ -151,6 +163,9 @@ public class PlayerListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         ItemStack air = new ItemStack(Material.AIR);
         ItemStack[] armor = {air, air, air, air};
+
+        ScoreboardMngr.resetKillstreak(e.getPlayer());
+        ScoreboardMngr.updateScoreBoard(e.getPlayer());
 
         e.getPlayer().getInventory().setContents(armor);
 
