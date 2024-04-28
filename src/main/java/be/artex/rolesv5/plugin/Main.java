@@ -7,6 +7,7 @@ import be.artex.rolesv5.api.roles.roles.solo.Assasin;
 import be.artex.rolesv5.api.roles.roles.solo.LGS;
 import be.artex.rolesv5.api.roles.roles.lg.VPL;
 import be.artex.rolesv5.api.roles.roles.solo.Yoriichi;
+import be.artex.rolesv5.api.roles.roles.sonic.Knuckles;
 import be.artex.rolesv5.plugin.listeners.PlayerListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -28,12 +29,14 @@ public final class Main extends JavaPlugin {
         Roles.registerCamp(Camp.VILLAGE);
         Roles.registerCamp(Camp.LOUP);
         Roles.registerCamp(Camp.SOLO);
+        Roles.registerCamp(Camp.SONIC_TEAM);
 
         Roles.registerRole(new VPL());
         Roles.registerRole(new LGS());
         Roles.registerRole(new Assasin());
         Roles.registerRole(new Yoriichi());
         Roles.registerRole(new Kanae());
+        Roles.registerRole(new Knuckles());
 
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 

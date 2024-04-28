@@ -145,7 +145,7 @@ public class PlayerListeners implements Listener {
         }
 
         if (entity.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
-            damage = (damage / 100) * 60;
+            damage = (damage / 100) * 47;
 
         if (entity.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
             damage = (damage / 100) * 60;

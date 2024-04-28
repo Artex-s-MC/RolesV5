@@ -44,7 +44,14 @@ public enum Camp {
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .build(),
             Bukkit.createInventory(null, 54, "Solitaires"),
-            "solo", 22);
+            "solo", 22),
+    SONIC_TEAM(ItemBuilder.create(Material.LAPIS_BLOCK)
+            .displayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Sonic Team")
+            .addEnchant(Enchantment.ARROW_DAMAGE, 1)
+            .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+            .build(),
+            Bukkit.createInventory(null, 54, "Sonic team"),
+            "sonic", 31);
 
 
     private final ItemStack stack;

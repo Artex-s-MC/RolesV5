@@ -24,7 +24,6 @@ public class ScoreboardMngr {
 
         obj.setDisplayName(ChatColor.WHITE + "[" + ChatColor.BOLD + ChatColor.AQUA + "RolesV5" + ChatColor.WHITE + "]");
 
-        obj.getScore(ChatColor.STRIKETHROUGH + "---" + ChatColor.ITALIC + "---------").setScore(12);
         obj.getScore(ChatColor.RED + "Kill Streak" + ChatColor.RESET + ": " + playersKillstreak.get(player.getUniqueId())).setScore(11);
 
 
@@ -34,7 +33,7 @@ public class ScoreboardMngr {
             obj.getScore(ChatColor.RED + "Kills" + ChatColor.RESET + ": " + playersKills.get(player.getUniqueId())).setScore(10);
         }
 
-        obj.getScore(ChatColor.STRIKETHROUGH + "--" + ChatColor.ITALIC + "----------").setScore(9);
+        obj.getScore("   ").setScore(9);
 
         if (playersDeaths.get(player.getUniqueId()) == null && playersKills.get(player.getUniqueId()) != null) {
             obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": " + playersKills.get(player.getUniqueId()) + ".00").setScore(8);
@@ -46,9 +45,8 @@ public class ScoreboardMngr {
             obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": " + (playersKills.get(player.getUniqueId()) / playersDeaths.get(player.getUniqueId()))).setScore(8);
         }
 
-        obj.getScore(ChatColor.STRIKETHROUGH + "----" + ChatColor.ITALIC + "--------").setScore(7);
+        obj.getScore("  ").setScore(7);
         obj.getScore(ChatColor.AQUA + "Joueurs" + ChatColor.RESET + ": " + players).setScore(6);
-        obj.getScore(ChatColor.STRIKETHROUGH + "-" + ChatColor.ITALIC + "-----------").setScore(5);
 
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
@@ -57,6 +55,12 @@ public class ScoreboardMngr {
 
     public static void resetKillStreak(Player player) {
         playersKillstreak.put(player.getUniqueId(), 0);
+
+        if (playersDeaths.get(player.getUniqueId()) == null) {
+            playersDeaths.put(player.getUniqueId(), 0);
+        } else {
+            playersDeaths.put(player.getUniqueId(), playersDeaths.get(player.getUniqueId()) + 1);
+        }
     }
 
     public static void addOnlinePlayer() {
