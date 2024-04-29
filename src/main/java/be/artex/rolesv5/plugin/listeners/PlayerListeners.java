@@ -64,37 +64,14 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void onPlayerDie(PlayerDeathEvent e) {
-        for (ItemStack stack : e.getDrops()) {
-            switch (stack.getType()) {
-                case GOLDEN_APPLE:
-                case ARROW:
-                case IRON_LEGGINGS:
-                case DIAMOND_CHESTPLATE:
-                case DIAMOND_HELMET:
-                case DIAMOND_BOOTS:
-                case IRON_HELMET:
-                case IRON_BOOTS:
-                case WATER_BUCKET:
-                case LAVA_BUCKET:
-                case DIAMOND_SWORD:
-                case COBBLESTONE:
-                    continue;
-                default:
-                    stack.setType(Material.AIR);
-            }
-        }
-
         if (Roles.getPlayerRole(e.getEntity()) == null) {
             e.setDeathMessage("");
             return;
         }
 
-        if (Roles.getPlayerRole(e.getEntity()) != null) {
-            if (Roles.getPlayerRole(e.getEntity()).getId().equalsIgnoreCase("imitateur") && Imitateur.stolenRole.get(e.getEntity().getUniqueId()) != null) {
-                Imitateur.stolenRole.remove(e.getEntity().getUniqueId());
-            }
+        if (Roles.getPlayerRole(e.getEntity()).getId().equalsIgnoreCase("imitateur") && Imitateur.stolenRole.get(e.getEntity().getUniqueId()) != null) {
+            Imitateur.stolenRole.remove(e.getEntity().getUniqueId());
         }
-
 
         Role killerRole = Roles.getPlayerRole(e.getEntity().getKiller());
 

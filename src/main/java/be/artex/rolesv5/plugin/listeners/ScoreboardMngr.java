@@ -1,5 +1,7 @@
 package be.artex.rolesv5.plugin.listeners;
 
+import be.artex.rolesv5.api.roles.Roles;
+import jdk.javadoc.internal.doclets.formats.html.markup.HtmlAttr;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,38 +24,49 @@ public class ScoreboardMngr {
         sb = Bukkit.getScoreboardManager().getNewScoreboard();
         obj = sb.registerNewObjective("roles", "dummy");
 
-        obj.setDisplayName(ChatColor.WHITE + "[" + ChatColor.BOLD + ChatColor.AQUA + "RolesV5" + ChatColor.WHITE + "]");
+        ChatColor color = ChatColor.AQUA;
 
-        obj.getScore(ChatColor.RED + "Kill Streak" + ChatColor.RESET + ": " + playersKillstreak.get(player.getUniqueId())).setScore(11);
+        obj.setDisplayName(ChatColor.WHITE + "[" + ChatColor.BOLD + color + "RolesV5" + ChatColor.WHITE + "]");
 
+        obj.getScore(" ").setScore(12);
+
+        obj.getScore(color + "" + ChatColor.BOLD + "JOUEUR").setScore(11);
+        obj.getScore(" Nom" + ChatColor.GRAY + ": " + color + player.getDisplayName()).setScore(10);
+
+        if (Roles.getPlayerRole(player) == null) {
+            obj.getScore(" Rôle" + ChatColor.GRAY + ": " + color + "Aucun").setScore(9);
+        } else {
+            obj.getScore(" Rôle " + ChatColor.GRAY + ": " + color + Roles.getPlayerRole(player).getName()).setScore(9);
+        }
+
+        obj.getScore("  ").setScore(8);
+
+        obj.getScore(color + "" + ChatColor.BOLD + "STATS").setScore(7);
+        obj.getScore(" Kill Streak" + ChatColor.GRAY + ": " + color + playersKillstreak.get(player.getUniqueId())).setScore(6);
 
         if (playersKills.get(player.getUniqueId()) == null) {
-            obj.getScore(ChatColor.RED + "Kills" + ChatColor.RESET + ": " + 0).setScore(10);
+            obj.getScore(" Kills" + ChatColor.GRAY + ": " + color + 0).setScore(5);
         } else {
-            obj.getScore(ChatColor.RED + "Kills" + ChatColor.RESET + ": " + playersKills.get(player.getUniqueId())).setScore(10);
+            obj.getScore(" Kills" + ChatColor.GRAY + ": " + color + playersKills.get(player.getUniqueId())).setScore(5);
         }
-
-        obj.getScore("   ").setScore(9);
 
         if (playersDeaths.get(player.getUniqueId()) == null && playersKills.get(player.getUniqueId()) != null) {
-            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": " + playersKills.get(player.getUniqueId()) + ".00").setScore(8);
+            obj.getScore(" KDR" + ChatColor.GRAY + ": " + color + playersKills.get(player.getUniqueId()) + ".00").setScore(4);
         } else if (playersDeaths.get(player.getUniqueId()) != null && playersKills.get(player.getUniqueId()) == null) {
-            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": -" + playersDeaths.get(player.getUniqueId()).toString() + ".00").setScore(8);
+            obj.getScore(" KDR" + ChatColor.GRAY + ": " + color + "-" + playersDeaths.get(player.getUniqueId()).toString() + ".00").setScore(4);
         } else if (playersDeaths.get(player.getUniqueId()) == null && playersKills.get(player.getUniqueId()) == null) {
-            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": 0.00").setScore(8);
+            obj.getScore(" KDR" + ChatColor.GRAY + ":" + color + "0.00").setScore(4);
         } else if (playersDeaths.get(player.getUniqueId()) == 0) {
-            // Handle the case where the player has deaths but no kills
-            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": 1").setScore(8);
+            obj.getScore(" KDR" + ChatColor.GRAY + ":").setScore(4);
         } else {
-            // Calculate and set the KDR score
             double kdr = (double) playersKills.get(player.getUniqueId()) / playersDeaths.get(player.getUniqueId());
-            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": " + String.format("%.2f", kdr)).setScore(8);
+            obj.getScore(" KDR" + ChatColor.GRAY + ": " + color + String.format("%.2f", kdr)).setScore(4);
         }
 
+        obj.getScore("   ").setScore(3);
 
-
-        obj.getScore("  ").setScore(7);
-        obj.getScore(ChatColor.AQUA + "Joueurs" + ChatColor.RESET + ": " + players).setScore(6);
+        obj.getScore(color + "" + ChatColor.BOLD + "SERVEUR").setScore(2);
+        obj.getScore(" Joueurs" + ChatColor.GRAY + ": " + color + players).setScore(1);
 
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
