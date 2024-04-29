@@ -3,6 +3,7 @@ package be.artex.rolesv5.plugin.listeners;
 import be.artex.rolesv5.api.camp.Camp;
 import be.artex.rolesv5.api.roles.Role;
 import be.artex.rolesv5.api.roles.Roles;
+import be.artex.rolesv5.api.roles.roles.solo.Imitateur;
 import be.artex.rolesv5.plugin.Main;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.*;
@@ -87,6 +88,13 @@ public class PlayerListeners implements Listener {
             e.setDeathMessage("");
             return;
         }
+
+        if (Roles.getPlayerRole(e.getEntity()) != null) {
+            if (Roles.getPlayerRole(e.getEntity()).getId().equalsIgnoreCase("imitateur") && Imitateur.stolenRole.get(e.getEntity().getUniqueId()) != null) {
+                Imitateur.stolenRole.remove(e.getEntity().getUniqueId());
+            }
+        }
+
 
         Role killerRole = Roles.getPlayerRole(e.getEntity().getKiller());
 
@@ -197,6 +205,12 @@ public class PlayerListeners implements Listener {
         e.setQuitMessage(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "-" + ChatColor.DARK_GRAY + "] " + e.getPlayer().getDisplayName());
 
         ScoreboardMngr.addOfflinePlayer();
+
+        if (Roles.getPlayerRole(e.getPlayer()) != null) {
+            if (Roles.getPlayerRole(e.getPlayer()).getId().equalsIgnoreCase("imitateur") && Imitateur.stolenRole.get(e.getPlayer().getUniqueId()) != null) {
+                Imitateur.stolenRole.remove(e.getPlayer().getUniqueId());
+            }
+        }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             ScoreboardMngr.updateScoreBoard(player);

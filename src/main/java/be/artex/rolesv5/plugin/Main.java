@@ -4,6 +4,7 @@ import be.artex.rolesv5.api.camp.Camp;
 import be.artex.rolesv5.api.roles.Roles;
 import be.artex.rolesv5.api.roles.roles.slayer.Kanae;
 import be.artex.rolesv5.api.roles.roles.solo.Assasin;
+import be.artex.rolesv5.api.roles.roles.solo.Imitateur;
 import be.artex.rolesv5.api.roles.roles.solo.LGS;
 import be.artex.rolesv5.api.roles.roles.lg.VPL;
 import be.artex.rolesv5.api.roles.roles.solo.Yoriichi;
@@ -37,6 +38,7 @@ public final class Main extends JavaPlugin {
         Roles.registerRole(new Yoriichi());
         Roles.registerRole(new Kanae());
         Roles.registerRole(new Knuckles());
+        Roles.registerRole(new Imitateur());
 
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 

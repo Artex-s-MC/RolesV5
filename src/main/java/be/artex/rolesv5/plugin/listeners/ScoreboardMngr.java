@@ -41,9 +41,16 @@ public class ScoreboardMngr {
             obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": -" + playersDeaths.get(player.getUniqueId()).toString() + ".00").setScore(8);
         } else if (playersDeaths.get(player.getUniqueId()) == null && playersKills.get(player.getUniqueId()) == null) {
             obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": 0.00").setScore(8);
+        } else if (playersDeaths.get(player.getUniqueId()) == 0) {
+            // Handle the case where the player has deaths but no kills
+            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": 1").setScore(8);
         } else {
-            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": " + (playersKills.get(player.getUniqueId()) / playersDeaths.get(player.getUniqueId()))).setScore(8);
+            // Calculate and set the KDR score
+            double kdr = (double) playersKills.get(player.getUniqueId()) / playersDeaths.get(player.getUniqueId());
+            obj.getScore(ChatColor.RED + "KDR" + ChatColor.RESET + ": " + String.format("%.2f", kdr)).setScore(8);
         }
+
+
 
         obj.getScore("  ").setScore(7);
         obj.getScore(ChatColor.AQUA + "Joueurs" + ChatColor.RESET + ": " + players).setScore(6);

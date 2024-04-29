@@ -79,7 +79,7 @@ public class Knuckles extends Role {
 
     @Override
     public void onHit(EntityDamageByEntityEvent e) {
-        if (new Random().nextInt(100) >= 15) {
+        if (new Random().nextInt(100) <= 15) {
             e.getEntity().setFireTicks(15 * 20);
         }
     }

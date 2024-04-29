@@ -16,7 +16,6 @@ import org.bukkit.potion.PotionEffectType;
 public class Yoriichi extends Role {
     private static final PotionEffect[] EFFECTS = {
             new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0),
-            new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0),
             new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0)
     };
 
@@ -24,7 +23,7 @@ public class Yoriichi extends Role {
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .displayName(ChatColor.GOLD + "Yoriichi")
-            .setLore(ChatColor.RESET + "" + ChatColor.AQUA + "Vitesse " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.GRAY + "Résistance " + ChatColor.RESET + "de façon permanente.")
+            .setLore(ChatColor.RESET + "" + ChatColor.AQUA + "Vitesse " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.RESET + "de façon permanente.")
             .build();
 
     @Override

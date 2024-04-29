@@ -24,7 +24,7 @@ public class Kanae extends Role {
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .displayName(ChatColor.GREEN + "Kanae")
-            .setLore(ChatColor.RESET + "A chaque coup Kanae à une chance de donner" + ChatColor.DARK_GRAY + "des effets négatifs" + ChatColor.RESET + ".")
+            .setLore(ChatColor.RESET + "A chaque coup Kanae à une chance de donner " + ChatColor.DARK_GRAY + "des effets négatifs" + ChatColor.RESET + ".")
             .build();
 
     @Override
