@@ -1,9 +1,9 @@
 package be.artex.rolesv5.plugin.listeners;
 
 import be.artex.rolesv5.api.camp.Camp;
-import be.artex.rolesv5.api.roles.Role;
-import be.artex.rolesv5.api.roles.Roles;
-import be.artex.rolesv5.api.roles.roles.solo.Imitateur;
+import be.artex.rolesv5.api.role.Role;
+import be.artex.rolesv5.api.role.Roles;
+import be.artex.rolesv5.api.role.roles.solo.Imitateur;
 import be.artex.rolesv5.plugin.Main;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.*;
@@ -64,18 +64,37 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void onPlayerDie(PlayerDeathEvent e) {
+        for (ItemStack stack : e.getDrops()) {
+            switch (stack.getType()) {
+                case GOLDEN_APPLE:
+                case ARROW:
+                case IRON_LEGGINGS:
+                case DIAMOND_CHESTPLATE:
+                case DIAMOND_HELMET:
+                case DIAMOND_BOOTS:
+                case IRON_HELMET:
+                case IRON_BOOTS:
+                case WATER_BUCKET:
+                case LAVA_BUCKET:
+                case DIAMOND_SWORD:
+                case IRON_SWORD:
+                case COBBLESTONE:
+                    continue;
+                default:
+                    stack.setType(Material.AIR);
+            }
+        }
+
         if (Roles.getPlayerRole(e.getEntity()) == null) {
             e.setDeathMessage("");
             return;
         }
 
-        if (Roles.getPlayerRole(e.getEntity()).getId().equalsIgnoreCase("imitateur") && Imitateur.stolenRole.get(e.getEntity().getUniqueId()) != null) {
-            Imitateur.stolenRole.remove(e.getEntity().getUniqueId());
-        }
+        Roles.getPlayerRole(e.getEntity()).onPlayerDeath(e.getEntity());
 
-        Role killerRole = Roles.getPlayerRole(e.getEntity().getKiller());
+        if (e.getEntity().getKiller() != null) {
+            if (Roles.getPlayerRole(e.getEntity().getKiller()) != null)
 
-        if (e.getEntity().getKiller() != null && killerRole != null) {
             ScoreboardMngr.addAKill(e.getEntity().getKiller());
             ScoreboardMngr.updateScoreBoard(e.getEntity().getKiller());
 
@@ -83,13 +102,16 @@ public class PlayerListeners implements Listener {
             ScoreboardMngr.updateScoreBoard(e.getEntity());
 
             e.setDeathMessage("-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " à été assasiné par " + ChatColor.RED + e.getEntity().getKiller().getDisplayName() + ChatColor.RESET + ", son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
-            killerRole.getOnKill(e);
+
+            if (Roles.getPlayerRole(e.getEntity().getKiller()) != null)
+                Roles.getPlayerRole(e.getEntity().getKiller()).getOnKill(e);
         } else {
             e.setDeathMessage("§o§m-------------------------\n" + ChatColor.GREEN + e.getEntity().getDisplayName() + ChatColor.RESET + " est mort, son role était " + Roles.getPlayerRole(e.getEntity()).getColor() + Roles.getPlayerRole(e.getEntity()).getName() + ChatColor.RESET + ".\n§o§m-------------------------");
         }
 
         Roles.setPlayerRole(e.getEntity(), null);
 
+        ScoreboardMngr.updateScoreBoard(e.getEntity());
     }
 
     @EventHandler
@@ -199,8 +221,20 @@ public class PlayerListeners implements Listener {
         if (e.getItem() == null)
             return;
 
-        if (e.getItem().equals(ItemBuilder.create(Material.ENCHANTED_BOOK).displayName(ChatColor.RESET + "Quel est ton rôle ?").build()))
+        if (e.getItem().equals(ItemBuilder.create(Material.ENCHANTED_BOOK).displayName(ChatColor.RESET + "Quel est ton rôle ?").build())) {
             e.getPlayer().openInventory(prepareCampsInv());
+            return;
+        }
+
+        for (Role role : Roles.roles) {
+            if (role.getItem() == null)
+                continue;
+
+            if (role.getItem().getStack().equals(e.getItem())) {
+                role.getItem().click(e);
+                break;
+            }
+        }
     }
 
     @EventHandler

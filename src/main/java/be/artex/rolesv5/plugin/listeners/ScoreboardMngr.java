@@ -1,7 +1,6 @@
 package be.artex.rolesv5.plugin.listeners;
 
-import be.artex.rolesv5.api.roles.Roles;
-import jdk.javadoc.internal.doclets.formats.html.markup.HtmlAttr;
+import be.artex.rolesv5.api.role.Roles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -36,7 +35,7 @@ public class ScoreboardMngr {
         if (Roles.getPlayerRole(player) == null) {
             obj.getScore(" Rôle" + ChatColor.GRAY + ": " + color + "Aucun").setScore(9);
         } else {
-            obj.getScore(" Rôle " + ChatColor.GRAY + ": " + color + Roles.getPlayerRole(player).getName()).setScore(9);
+            obj.getScore(" Rôle" + ChatColor.GRAY + ": " + color + Roles.getPlayerRole(player).getName()).setScore(9);
         }
 
         obj.getScore("  ").setScore(8);

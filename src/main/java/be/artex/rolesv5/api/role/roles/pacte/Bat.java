@@ -1,53 +1,50 @@
-package be.artex.rolesv5.api.roles.roles.solo;
+package be.artex.rolesv5.api.role.roles.pacte;
 
 import be.artex.rolesv5.api.camp.Camp;
-import be.artex.rolesv5.api.roles.Role;
+import be.artex.rolesv5.api.role.Role;
+import be.artex.rolesv5.api.role.item.Item;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-public class LGS extends Role {
-    private static final PotionEffect[] EFFECTS = {
-            new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0)
-    };
-
-    private static final ItemStack GUI_STACK = ItemBuilder.create(Material.ROTTEN_FLESH)
+public class Bat extends Role {
+    private static final ItemStack GUI_STACK = ItemBuilder.create(Material.QUARTZ)
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-            .displayName(ChatColor.RED + "Loup Garou Solitaire")
-            .setLore(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "14 coeurs " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.RESET + "de façon permanente.")
+            .displayName(ChatColor.RED + "Démon Bat")
+            .setLore(ChatColor.RESET + "Possibilité de " + ChatColor.AQUA + "voler" + ChatColor.RESET + ".")
             .build();
 
     @Override
     public String getName() {
-        return "Loup Garou Solitaire";
+        return "Démon Bat";
     }
 
     @Override
     public String getId() {
-        return "lg_lgs";
+        return "pacte_bat";
     }
 
     @Override
     public PotionEffect[] getEffects() {
-        return EFFECTS;
+        return new PotionEffect[0];
     }
 
     @Override
     public Camp getCamp() {
-        return Camp.SOLO;
+        return Camp.PACTES;
     }
 
     @Override
     public int getMaxHealth() {
-        return 28;
+        return 16;
     }
 
     @Override
@@ -62,7 +59,7 @@ public class LGS extends Role {
 
     @Override
     public ChatColor getColor() {
-        return ChatColor.GOLD;
+        return ChatColor.RED;
     }
 
     @Override
@@ -78,5 +75,22 @@ public class LGS extends Role {
     @Override
     public void onHit(EntityDamageByEntityEvent e) {
 
+    }
+
+    @Override
+    public void onPlayerDeath(Player player) {
+        player.setFlying(false);
+        player.setAllowFlight(false);
+    }
+
+    @Override
+    public void onAssign(Player player) {
+        player.setAllowFlight(true);
+        player.setFlying(true);
+    }
+
+    @Override
+    public Item getItem() {
+        return null;
     }
 }

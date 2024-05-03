@@ -1,11 +1,13 @@
-package be.artex.rolesv5.api.roles.roles.solo;
+package be.artex.rolesv5.api.role.roles.solo;
 
 import be.artex.rolesv5.api.camp.Camp;
-import be.artex.rolesv5.api.roles.Role;
+import be.artex.rolesv5.api.role.Role;
+import be.artex.rolesv5.api.role.item.Item;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -13,27 +15,26 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Yoriichi extends Role {
+public class LGS extends Role {
     private static final PotionEffect[] EFFECTS = {
-            new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0),
-            new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0)
+            new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0)
     };
 
-    private static final ItemStack GUI_STACK = ItemBuilder.create(Material.IRON_SWORD)
+    private static final ItemStack GUI_STACK = ItemBuilder.create(Material.ROTTEN_FLESH)
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-            .displayName(ChatColor.GOLD + "Yoriichi")
-            .setLore(ChatColor.RESET + "" + ChatColor.AQUA + "Vitesse " + ChatColor.RESET + "de façon permanente.", ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.RESET + "de façon permanente.")
+            .displayName(ChatColor.RED + "Loup Garou Solitaire")
+            .setLore(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "14 coeurs " + ChatColor.GRAY + "de façon permanente.", ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.GRAY + "de façon permanente.")
             .build();
 
     @Override
     public String getName() {
-        return "Yoriichi";
+        return "Loup Garou Solitaire";
     }
 
     @Override
     public String getId() {
-        return "yoriichi";
+        return "lg_lgs";
     }
 
     @Override
@@ -48,7 +49,7 @@ public class Yoriichi extends Role {
 
     @Override
     public int getMaxHealth() {
-        return 20;
+        return 28;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class Yoriichi extends Role {
 
     @Override
     public int getPlacement() {
-        return 22;
+        return 20;
     }
 
     @Override
@@ -79,5 +80,20 @@ public class Yoriichi extends Role {
     @Override
     public void onHit(EntityDamageByEntityEvent e) {
 
+    }
+
+    @Override
+    public void onPlayerDeath(Player player) {
+
+    }
+
+    @Override
+    public void onAssign(Player player) {
+
+    }
+
+    @Override
+    public Item getItem() {
+        return null;
     }
 }

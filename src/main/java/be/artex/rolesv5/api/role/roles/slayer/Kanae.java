@@ -1,7 +1,8 @@
-package be.artex.rolesv5.api.roles.roles.slayer;
+package be.artex.rolesv5.api.role.roles.slayer;
 
 import be.artex.rolesv5.api.camp.Camp;
-import be.artex.rolesv5.api.roles.Role;
+import be.artex.rolesv5.api.role.Role;
+import be.artex.rolesv5.api.role.item.Item;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,7 +25,7 @@ public class Kanae extends Role {
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .displayName(ChatColor.GREEN + "Kanae")
-            .setLore(ChatColor.RESET + "A chaque coup Kanae à une chance de donner " + ChatColor.DARK_GRAY + "des effets négatifs" + ChatColor.RESET + ".")
+            .setLore(ChatColor.RESET + "" + ChatColor.GRAY + "A chaque coup Kanae à une chance de donner " + ChatColor.DARK_GRAY + "des effets négatifs" + ChatColor.GRAY + ".")
             .build();
 
     @Override
@@ -160,5 +161,20 @@ public class Kanae extends Role {
         }
 
 
+    }
+
+    @Override
+    public void onPlayerDeath(Player player) {
+
+    }
+
+    @Override
+    public void onAssign(Player player) {
+
+    }
+
+    @Override
+    public Item getItem() {
+        return null;
     }
 }

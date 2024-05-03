@@ -1,6 +1,8 @@
-package be.artex.rolesv5.api.roles;
+package be.artex.rolesv5.api.role;
 
 import be.artex.rolesv5.api.camp.Camp;
+import be.artex.rolesv5.api.role.item.Item;
+import be.artex.rolesv5.plugin.listeners.ScoreboardMngr;
 import com.avaje.ebean.validation.NotNull;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -31,11 +33,20 @@ public abstract class Role {
         player.getInventory().clear();
         Roles.givePlayerGear(player.getInventory(), getSwordSharpLvl());
 
+        if (getItem() != null)
+            player.getInventory().addItem(getItem().getStack());
+
+        //sb
+        ScoreboardMngr.updateScoreBoard(player);
+
         // tp
         int x = new Random().nextInt(40);
         int z = new Random().nextInt(40);
 
         player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
+
+        // role
+        onAssign(player);
     }
 
 
@@ -67,6 +78,12 @@ public abstract class Role {
     public abstract int getSwordSharpLvl();
 
     public abstract void onHit(EntityDamageByEntityEvent e);
+
+    public abstract void onPlayerDeath(Player player);
+
+    public abstract void onAssign(Player player);
+
+    public abstract Item getItem();
 
 
 }

@@ -1,8 +1,7 @@
-package be.artex.rolesv5.api.roles;
+package be.artex.rolesv5.api.role;
 
 import be.artex.rolesv5.api.camp.Camp;
 import be.raft.crafty.item.ItemBuilder;
-import com.avaje.ebean.validation.NotNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;

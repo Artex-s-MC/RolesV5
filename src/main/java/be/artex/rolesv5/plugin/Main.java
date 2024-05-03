@@ -1,14 +1,15 @@
 package be.artex.rolesv5.plugin;
 
 import be.artex.rolesv5.api.camp.Camp;
-import be.artex.rolesv5.api.roles.Roles;
-import be.artex.rolesv5.api.roles.roles.slayer.Kanae;
-import be.artex.rolesv5.api.roles.roles.solo.Assasin;
-import be.artex.rolesv5.api.roles.roles.solo.Imitateur;
-import be.artex.rolesv5.api.roles.roles.solo.LGS;
-import be.artex.rolesv5.api.roles.roles.lg.VPL;
-import be.artex.rolesv5.api.roles.roles.solo.Yoriichi;
-import be.artex.rolesv5.api.roles.roles.sonic.Knuckles;
+import be.artex.rolesv5.api.role.Roles;
+import be.artex.rolesv5.api.role.roles.pacte.Bat;
+import be.artex.rolesv5.api.role.roles.shinobi.Hinata;
+import be.artex.rolesv5.api.role.roles.slayer.Kanae;
+import be.artex.rolesv5.api.role.roles.solo.Assasin;
+import be.artex.rolesv5.api.role.roles.solo.Imitateur;
+import be.artex.rolesv5.api.role.roles.solo.LGS;
+import be.artex.rolesv5.api.role.roles.lg.VPL;
+import be.artex.rolesv5.api.role.roles.sonic.Knuckles;
 import be.artex.rolesv5.plugin.listeners.PlayerListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,14 +32,20 @@ public final class Main extends JavaPlugin {
         Roles.registerCamp(Camp.LOUP);
         Roles.registerCamp(Camp.SOLO);
         Roles.registerCamp(Camp.SONIC_TEAM);
+        Roles.registerCamp(Camp.PACTES);
+        Roles.registerCamp(Camp.SHINOBI);
+        Roles.registerCamp(Camp.AKATSUKI);
+        Roles.registerCamp(Camp.OROCHIMARU);
 
         Roles.registerRole(new VPL());
         Roles.registerRole(new LGS());
         Roles.registerRole(new Assasin());
-        Roles.registerRole(new Yoriichi());
         Roles.registerRole(new Kanae());
         Roles.registerRole(new Knuckles());
         Roles.registerRole(new Imitateur());
+        Roles.registerRole(new Bat());
+        Roles.registerRole(new Hinata());
+
 
         this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
 

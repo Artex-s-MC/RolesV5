@@ -1,8 +1,9 @@
-package be.artex.rolesv5.api.roles.roles.solo;
+package be.artex.rolesv5.api.role.roles.solo;
 
 import be.artex.rolesv5.api.camp.Camp;
-import be.artex.rolesv5.api.roles.Role;
-import be.artex.rolesv5.api.roles.Roles;
+import be.artex.rolesv5.api.role.Role;
+import be.artex.rolesv5.api.role.Roles;
+import be.artex.rolesv5.api.role.item.Item;
 import be.raft.crafty.item.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,7 +30,7 @@ public class Imitateur extends Role {
             .addEnchant(Enchantment.ARROW_FIRE, 1)
             .addItemFlags(ItemFlag.HIDE_ENCHANTS)
             .displayName(ChatColor.GOLD + "Imitateur")
-            .setLore(ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.RESET + "avant son premier kill.", ChatColor.RESET + "A chaque kill il peut " + ChatColor.DARK_PURPLE + "voler " + ChatColor.RESET + "le role de sa victime.")
+            .setLore(ChatColor.RESET + "" + ChatColor.RED + "Force " + ChatColor.GRAY + "avant son premier kill.", ChatColor.RESET + "" + ChatColor.GRAY + "A chaque kill il peut " + ChatColor.DARK_PURPLE + "voler " + ChatColor.GRAY + "le rôle de sa victime.")
             .build();
 
     @Override
@@ -73,7 +74,15 @@ public class Imitateur extends Role {
         for (PotionEffect pe : deathPlayerRole.getEffects())
             killer.addPotionEffect(pe);
 
+        if (stolenRole.get(killer.getUniqueId()) != null && Roles.getRole(stolenRole.get(killer.getUniqueId())).getItem() != null)
+            killer.getInventory().remove(Roles.getRole(stolenRole.get(killer.getUniqueId())).getItem().getStack());
+
+        if (deathPlayerRole.getItem() != null)
+            killer.getInventory().addItem();
+
         killer.setMaxHealth(deathPlayerRole.getMaxHealth());
+
+        deathPlayerRole.onAssign(killer);
 
         killer.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "RolesV5" + ChatColor.GRAY + " >> " + ChatColor.AQUA + "Vous avez volé le rôle: " + ChatColor.BOLD + deathPlayerRole.getName());
 
@@ -99,5 +108,21 @@ public class Imitateur extends Role {
     public void onHit(EntityDamageByEntityEvent e) {
         if (stolenRole.get(e.getDamager().getUniqueId()) != null)
             Roles.getRole(stolenRole.get(e.getDamager().getUniqueId())).onHit(e);
+    }
+
+    @Override
+    public void onPlayerDeath(Player player) {
+        if (stolenRole.get(player.getUniqueId()) != null)
+            Roles.getRole(stolenRole.get(player.getUniqueId())).onPlayerDeath(player);
+    }
+
+    @Override
+    public void onAssign(Player player) {
+
+    }
+
+    @Override
+    public Item getItem() {
+        return null;
     }
 }
